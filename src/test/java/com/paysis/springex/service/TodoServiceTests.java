@@ -41,4 +41,16 @@ public class TodoServiceTests {
         log.info(responseDTO);
         responseDTO.getDtoList().stream().forEach(todoDTO -> log.info(todoDTO));
     }
+
+    @Test
+    public void testModify() {
+        TodoDTO todoDTO = TodoDTO.builder()
+                .title("스프링 테스트22222")
+                .dueDate(LocalDate.of(2023, 3,9))
+                .tno(23082L)
+                .finished(false)
+                .build();
+
+        todoService.modify(todoDTO);
+    }
 }
