@@ -1,5 +1,6 @@
 package com.paysis.springex.controller;
 
+import com.paysis.springex.dto.PageRequestDTO;
 import com.paysis.springex.dto.TodoDTO;
 import com.paysis.springex.service.TodoService;
 import lombok.RequiredArgsConstructor;
@@ -23,14 +24,6 @@ public class TodoController {
 
     private final TodoService todoService;
 
-    @RequestMapping("/list")
-    public void list(Model model) {
-
-        log.info("todo list........");
-
-        model.addAttribute("dtoList", todoService.getAll());
-    }
-
     @GetMapping("/register")
     public void register() {
         log.info("todo register........");
@@ -53,6 +46,17 @@ public class TodoController {
         todoService.register(todoDTO);
 
         return "redirect:/todo/list";
+    }
+
+    @GetMapping("/list")
+    public void list(@Valid PageRequestDTO pageRequestDTO, BindingResult bindingResult, Model model) {
+
+        log.info(pageRequestDTO);
+
+        if (bindingResult.hasErrors()) {
+            pageRequestDTO = PageRequestDTO.builder().build();
+        }
+        model.addAttribute("responseDTO", todoService.getList(pageRequestDTO));
     }
 
     @GetMapping({"/read", "/modify"})

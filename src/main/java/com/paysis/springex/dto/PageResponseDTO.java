@@ -1,9 +1,13 @@
 package com.paysis.springex.dto;
 
 import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 
+@Getter
+@ToString
 public class PageResponseDTO<E> {
 
     private int page;
@@ -19,7 +23,7 @@ public class PageResponseDTO<E> {
     private boolean next;
     private List<E> dtoList;
 
-    @Builder
+    @Builder(builderMethodName = "withAll")
     public PageResponseDTO(PageRequestDTO pageRequestDTO, List<E> dtoList, int total) {
 
         this.page = pageRequestDTO.getPage();
